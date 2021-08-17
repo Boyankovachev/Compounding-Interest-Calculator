@@ -2,11 +2,48 @@
 
 <html lang="en">
 
+    <title>Compound Interest Calculator</title>
+
+    <script
+    src="https://code.jquery.com/jquery-3.6.0.js"
+    integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+    crossorigin="anonymous">
+    </script>
+
+    <script src="website-functionality.js"></script>
+    <script src="calculate.js"></script>
+
 <head>
 </head>
 
 <body>
-    <p>test2</p>
+    <h1>Compound Interest Calculator</h1>
+
+    <p>Starting amount</p>
+    <input id="starting-amount" type="number" placeholder="starting amount">
+
+    <p>Monthly contributions</p>
+    <input id="monthly-contribution" type="number" placeholder="monthly contribution">
+
+    <p>Avarage annual return</p>
+    <input id="annual-return" type="number" placeholder="annual return">
+
+    <form id="compaunding-settings">
+        <p>Compounding settings:</p>
+        <input id="annual" type="radio" name="compaunding-settings" value="annual" checked="checked">
+        <label for="annual">annual</label>
+        <input id="monthly" type="radio" name="compaunding-settings" value="monthly">
+        <label for="monthly">monthly</label>
+    </form>
+
+    <p>Years</p>
+    <select id="years"></select>
+
+    <p>Inflation rate</p>
+    <input id="inflation" type="number" placeholder="inflation">
+
+    <button id="calculate">Calculate</button>
+
 </body>
 
 </html>
