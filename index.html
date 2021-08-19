@@ -13,37 +13,50 @@
     <script src="website-functionality.js"></script>
     <script src="calculate.js"></script>
 
+    <link rel="stylesheet" href="style.css">
+
 <head>
 </head>
 
 <body>
-    <h1>Compound Interest Calculator</h1>
+    <div class="head">
+        <h1>Compound Interest Calculator</h1>
+    </div>
+    <div class="input">
+        <div class="input-elements">
+            <p>Starting amount</p>
+            <input id="starting-amount" type="number" placeholder="starting amount">
 
-    <p>Starting amount</p>
-    <input id="starting-amount" type="number" placeholder="starting amount">
+            <p>Monthly contributions</p>
+            <input id="monthly-contribution" type="number" placeholder="monthly contribution">
 
-    <p>Monthly contributions</p>
-    <input id="monthly-contribution" type="number" placeholder="monthly contribution">
+            <p>Avarage annual return</p>
+            <input id="annual-return" type="number" placeholder="annual return">
 
-    <p>Avarage annual return</p>
-    <input id="annual-return" type="number" placeholder="annual return">
+            <form id="compaunding-settings">
+                <p>Compounding settings:</p>
+                <input id="annual" type="radio" name="compaunding-settings" value="annual" checked="checked">
+                <label for="annual">annual</label>
+                <input id="monthly" type="radio" name="compaunding-settings" value="monthly">
+                <label for="monthly">monthly</label>
+            </form>
 
-    <form id="compaunding-settings">
-        <p>Compounding settings:</p>
-        <input id="annual" type="radio" name="compaunding-settings" value="annual" checked="checked">
-        <label for="annual">annual</label>
-        <input id="monthly" type="radio" name="compaunding-settings" value="monthly">
-        <label for="monthly">monthly</label>
-    </form>
+            <p>Years</p>
+            <select id="years"></select>
 
-    <p>Years</p>
-    <select id="years"></select>
+            <p>Inflation rate</p>
+            <input id="inflation" type="number" placeholder="inflation">
 
-    <p>Inflation rate</p>
-    <input id="inflation" type="number" placeholder="inflation">
+            <button id="calculate">Calculate</button>
+        </div>
+    </div>
+    <div class="output-summary">
+    </div>
+    <div class="output-detailed">
+        <div id="years-details">
 
-    <button id="calculate">Calculate</button>
-
+        </div>
+    </div>
 </body>
 
 </html>

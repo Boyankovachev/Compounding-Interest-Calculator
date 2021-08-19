@@ -1,0 +1,30 @@
+.head{
+    width: 100%;
+    text-align: center;
+    border-style: none;
+}
+
+.input{
+    width: 25%;
+    float: left;
+    margin: 0px;
+    padding: 0px;
+}
+
+.input-elements{
+    padding-left: 15%;
+}
+
+.output-summary{
+    width: 50%;    
+    float: left;
+    margin: 0px;
+    padding: 0px;
+}
+
+.output-detailed{
+    width: 25%;    
+    float: right;
+    margin: 0px;
+    padding: 0px;
+}

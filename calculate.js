@@ -17,9 +17,25 @@ $(function(){
         var result = calculate(input);
         console.log('\n');
         console.log(result);
+        populate(result);
     
 
-    })
+    });
+    
+    $("#years-details").on("click", ".expand-button", function(){
+
+        var year = $(this).attr("year");
+        var yearDiv = $(`#year${year}-details`);
+
+        if(yearDiv.css("display") == "none"){
+            yearDiv.css("display", "block");
+        }
+        else{
+            yearDiv.css("display", "none");
+        }
+        
+    });
+
 });
 
 function checkInput(input){
@@ -130,4 +146,42 @@ function calculate(input){
     }
     total.total = currentTotal;
     return total;
+}
+
+function populate(result){
+    populateSummary(result);
+    populateDetailed(result);
+}
+
+function populateSummary(result){
+
+    $(".output-summary").empty();
+
+    $(".output-summary").append(
+        '<h2>At the end of year ' + result.years.length + ' you will have: ' + result.total.toFixed(2));
+
+}
+
+function populateDetailed(result){
+
+    $("#years-details").empty();
+
+    for(i=1; i<result.years.length+1; i++){
+        $("#years-details").append(`<div id=year${i}></div>`)
+        $(`#year${i}`).append(`<h3>Year ${i}: ${result.years[i-1].yearTotal.toFixed(2)}</h3><button class="expand-button" year=${i}>Expand</button>`);
+        $(`#year${i}`).append(`<div id=year${i}-details></div>`);
+        for(j=1; j<result.years[i-1].months.length+1; j++){
+            $(`#year${i}-details`).append(
+                `<div id=year-${i}-month${j}>` + 
+                `<h4>Month ${j}</h4>` + 
+                `<p>Month total: ${result.years[i-1].months[j-1].monthTotal}` + 
+                `<p>Income: ${result.years[i-1].months[j-1].invested}` +
+                `<p>Gained by returns: ${result.years[i-1].months[j-1].gainedByReturns}` +
+                `<p>Lost by inflation: ${result.years[i-1].months[j-1].lostByInflation}` +
+                `</div>`
+                );
+            $(`#year${i}-details`).css("display", "none");
+        }
+    }
+
 }
