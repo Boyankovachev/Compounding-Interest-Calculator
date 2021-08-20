@@ -13,11 +13,10 @@ $(function(){
 
         
         var inputFlag = checkInput(input);
-        logInput(input);
-        var result = calculate(input);
-        console.log('\n');
-        console.log(result);
-        populate(result);
+        if(inputFlag){
+            var result = calculate(input);
+            populate(result, input);
+        }
     
 
     });
@@ -148,17 +147,19 @@ function calculate(input){
     return total;
 }
 
-function populate(result){
-    populateSummary(result);
+function populate(result, input){
+    populateSummary(result, input);
     populateDetailed(result);
 }
 
-function populateSummary(result){
+function populateSummary(result, input){
 
-    $(".output-summary").empty();
+    $("#total-div").empty();
 
-    $(".output-summary").append(
+    $("#total-div").append(
         '<h2>At the end of year ' + result.years.length + ' you will have: ' + result.total.toFixed(2));
+
+    $("#chart-div").CanvasJSChart(generateChartOptions(result, input));
 
 }
 
@@ -168,20 +169,56 @@ function populateDetailed(result){
 
     for(i=1; i<result.years.length+1; i++){
         $("#years-details").append(`<div id=year${i}></div>`)
-        $(`#year${i}`).append(`<h3>Year ${i}: ${result.years[i-1].yearTotal.toFixed(2)}</h3><button class="expand-button" year=${i}>Expand</button>`);
+        $(`#year${i}`).append(`<button class="expand-button" year=${i}>Year ${i}: ${result.years[i-1].yearTotal.toFixed(2)}</button>`);
         $(`#year${i}`).append(`<div id=year${i}-details></div>`);
         for(j=1; j<result.years[i-1].months.length+1; j++){
             $(`#year${i}-details`).append(
                 `<div id=year-${i}-month${j}>` + 
-                `<h4>Month ${j}</h4>` + 
-                `<p>Month total: ${result.years[i-1].months[j-1].monthTotal}` + 
-                `<p>Income: ${result.years[i-1].months[j-1].invested}` +
-                `<p>Gained by returns: ${result.years[i-1].months[j-1].gainedByReturns}` +
-                `<p>Lost by inflation: ${result.years[i-1].months[j-1].lostByInflation}` +
+                `<h4>Month ${j}: ${result.years[i-1].months[j-1].monthTotal.toFixed(2)}</h4>` + 
+                `<p>Income: ${result.years[i-1].months[j-1].invested.toFixed(2)}` +
+                `<p>Gained by returns: ${result.years[i-1].months[j-1].gainedByReturns.toFixed(2)}` +
+                `<p>Lost by inflation: ${result.years[i-1].months[j-1].lostByInflation.toFixed(2)}` +
                 `</div>`
                 );
             $(`#year${i}-details`).css("display", "none");
         }
     }
 
+}
+
+function generateChartOptions(result, input){
+
+    var dataPoints = []
+
+    for(i=1; i<result.years.length+1; i++){
+        if(input.compaundingSettings == "monthly"){
+            for(j=1; j<result.years[i-1].months.length+1; j++){
+                dataPoints.push({
+                    x: (i-1)*12 + j,
+                    y: Math.floor(result.years[i-1].months[j-1].monthTotal)
+                });
+            }
+        }
+        else{
+            dataPoints.push({
+                x: i,
+                y: Math.floor(result.years[i-1].yearTotal)
+            });
+        }
+    }
+
+    var options = {
+        title: {
+            text: "Chart"
+        },
+        animationEnabled: true,
+        data: [
+        {
+            type: "spline", //change it to line, area, column, pie, etc
+            dataPoints: dataPoints
+        }
+        ]
+    };
+    
+    return options;
 }
